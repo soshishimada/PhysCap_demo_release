@@ -1,5 +1,5 @@
 # PhysCap: Physically Plausible Monocular 3D Motion Capture in Real Time
-The implementation is based on [SIGGRAPH Aisa'20](https://gvv.mpi-inf.mpg.de/projects/PhysCap/). 
+The implementation is based on [SIGGRAPH Aisa'20](https://vcai.mpi-inf.mpg.de/projects/PhysCap/). 
  
 ## Dependencies
 - Python 3.7
