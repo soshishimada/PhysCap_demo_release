@@ -87,8 +87,7 @@ def sim_loop(path_dict,floor_known=0):
     M = np.zeros((model.q_size, model.q_size))
     jointIds_reordered = np.array(jointIds)[rbdl2bullet]
  
-    ### start simulation loop ###
-    print('=============',la_po_dic.keys())
+    ### start simulation loop ### 
     n_frames = len(la_po_dic['trans_root_tx']) 
     for count in range(n_frames):
   
