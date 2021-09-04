@@ -1,0 +1,5 @@
+scipy==1.6.1
+numpy==1.20.1
+pybullet==3.1.0
+cvxopt==1.2.6
+argparse==1.1

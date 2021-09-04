@@ -1,0 +1,199 @@
+Skeletool Skeleton Definition V1.0
+joints: 75
+  root_tx              prismatic none                   -2.35437   -237.806    26.4052          1          0          0        1.0
+  root_ty              prismatic root_tx                       0          0          0          0          1          0        1.0
+  root_tz              prismatic root_ty                       0          0          0          0          0          1        1.0
+  root_rx              revolute  root_tz                       0          0          0          1          0          0        1.0
+  root_ry              revolute  root_rx                       0          0          0          0          1          0        1.0
+  root_rz              revolute  root_ry                       0          0          0          0          0          1        1.0
+  left_hip_rx          revolute  root_rz                 57.4607   -81.6852   -18.6897          1          0          0        1.0
+  left_hip_ry          revolute  left_hip_rx                   0          0          0          0          1          0        1.0
+  left_hip_rz          revolute  left_hip_ry                   0          0          0          0          0          1        1.0
+  right_hip_rx         revolute  root_rz                -59.1119   -89.8349   -14.7968          1          0          0        1.0
+  right_hip_ry         revolute  right_hip_rx                  0          0          0          0          1          0        1.0
+  right_hip_rz         revolute  right_hip_ry                  0          0          0          0          0          1        1.0
+  spine_2_rx           revolute  root_rz                 4.41858     122.89   -36.6543          1          0          0        1.0
+  spine_2_ry           revolute  spine_2_rx                    0          0          0          0          1          0        1.0
+  spine_2_rz           revolute  spine_2_ry                    0          0          0          0          0          1        1.0
+  left_knee_rx         revolute  left_hip_rz             44.5335   -389.616     8.7558          1          0          0        1.0
+  left_knee_ry         revolute  left_knee_rx                  0          0          0          0          1          0        1.0
+  left_knee_rz         revolute  left_knee_ry                  0          0          0          0          0          1        1.0
+  right_knee_rx        revolute  right_hip_rz           -44.0918   -385.943   -4.33468          1          0          0        1.0
+  right_knee_ry        revolute  right_knee_rx                 0          0          0          0          1          0        1.0
+  right_knee_rz        revolute  right_knee_ry                 0          0          0          0          0          1        1.0
+  spine_3_rx           revolute  spine_2_rz               4.4269    137.384    26.9851          1          0          0        1.0
+  spine_3_ry           revolute  spine_3_rx                    0          0          0          0          1          0        1.0
+  spine_3_rz           revolute  spine_3_ry                    0          0          0          0          0          1        1.0
+  left_ankle_rx        revolute  left_knee_rz           -14.3872   -428.174   -36.6562          1          0          0        1.0
+  left_ankle_ry        revolute  left_ankle_rx                 0          0          0          0          1          0        1.0
+  left_ankle_rz        revolute  left_ankle_ry                 0          0          0          0          0          1        1.0
+  right_ankle_rx       revolute  right_knee_rz           18.8776   -421.148   -33.9244          1          0          0        1.0
+  right_ankle_ry       revolute  right_ankle_rx                0          0          0          0          1          0        1.0
+  right_ankle_rz       revolute  right_ankle_ry                0          0          0          0          0          1        1.0
+  spine_4_rx           revolute  spine_3_rz             -2.13874    55.7542    2.40866          1          0          0        1.0
+  spine_4_ry           revolute  spine_4_rx                    0          0          0          0          1          0        1.0
+  spine_4_rz           revolute  spine_4_ry                    0          0          0          0          0          1        1.0
+  left_foot_rx         revolute  left_ankle_rz           42.3823   -60.5153    121.616          1          0          0        1.0
+  left_foot_ry         revolute  left_foot_rx                  0          0          0          0          1          0        1.0
+  left_foot_rz         revolute  left_foot_ry                  0          0          0          0          0          1        1.0
+  right_foot_rx        revolute  right_ankle_rz         -34.5655   -62.3018    130.127          1          0          0        1.0
+  right_foot_ry        revolute  right_foot_rx                 0          0          0          0          1          0        1.0
+  right_foot_rz        revolute  right_foot_ry                 0          0          0          0          0          1        1.0
+  neck_rx              revolute  spine_4_rz             -13.4078    210.015   -31.2048          1          0          0        1.0
+  neck_ry              revolute  neck_rx                       0          0          0          0          1          0        1.0
+  neck_rz              revolute  neck_ry                       0          0          0          0          0          1        1.0
+  left_clavicle_rx     revolute  spine_4_rz              70.7938    112.986   -18.3348          1          0          0        1.0
+  left_clavicle_ry     revolute  left_clavicle_rx              0          0          0          0          1          0        1.0
+  left_clavicle_rz     revolute  left_clavicle_ry              0          0          0          0          0          1        1.0
+  right_clavicle_rx    revolute  spine_4_rz             -81.9975    111.444   -23.1426          1          0          0        1.0
+  right_clavicle_ry    revolute  right_clavicle_rx             0          0          0          0          1          0        1.0
+  right_clavicle_rz    revolute  right_clavicle_ry             0          0          0          0          0          1        1.0
+  head_rx              revolute  neck_rz                 10.1074    90.1135    50.4994          1          0          0        1.0
+  head_ry              revolute  head_rx                       0          0          0          0          1          0        1.0
+  head_rz              revolute  head_ry                       0          0          0          0          0          1        1.0
+  left_shoulder_rx     revolute  left_clavicle_rz        121.417    45.4832    -18.064          1          0          0        1.0
+  left_shoulder_ry     revolute  left_shoulder_rx              0          0          0          0          1          0        1.0
+  left_shoulder_rz     revolute  left_shoulder_ry              0          0          0          0          0          1        1.0
+  right_shoulder_rx    revolute  right_clavicle_rz      -111.836    47.0637   -7.73826          1          0          0        1.0
+  right_shoulder_ry    revolute  right_shoulder_rx             0          0          0          0          1          0        1.0
+  right_shoulder_rz    revolute  right_shoulder_ry             0          0          0          0          0          1        1.0
+  left_elbow_rx        revolute  left_shoulder_rz        256.248    -16.188   -22.3771          1          0          0        1.0
+  left_elbow_ry        revolute  left_elbow_rx                 0          0          0          0          1          0        1.0
+  left_elbow_rz        revolute  left_elbow_ry                 0          0          0          0          0          1        1.0
+  right_elbow_rx       revolute  right_shoulder_rz       -260.41   -15.4904   -30.4453          1          0          0        1.0
+  right_elbow_ry       revolute  right_elbow_rx                0          0          0          0          1          0        1.0
+  right_elbow_rz       revolute  right_elbow_ry                0          0          0          0          0          1        1.0
+  left_lowarm_rx       revolute  left_elbow_rz           265.835    12.5615   -7.66416          1          0          0        1.0
+  left_lowarm_ry       revolute  left_lowarm_rx                0          0          0          0          1          0        1.0
+  left_lowarm_rz       revolute  left_lowarm_ry                0          0          0          0          0          1        1.0
+  right_lowarm_rx      revolute  right_elbow_rz         -269.643    7.18705   -6.02932          1          0          0        1.0
+  right_lowarm_ry      revolute  right_lowarm_rx               0          0          0          0          1          0        1.0
+  right_lowarm_rz      revolute  right_lowarm_ry               0          0          0          0          0          1        1.0
+  left_hand_rx         revolute  left_lowarm_rz          86.4762   -10.6047   -15.6062          1          0          0        1.0
+  left_hand_ry         revolute  left_hand_rx                  0          0          0          0          1          0        1.0
+  left_hand_rz         revolute  left_hand_ry                  0          0          0          0          0          1        1.0
+  right_hand_rx        revolute  right_lowarm_rz        -88.3663   -8.58758   -10.1388          1          0          0        1.0
+  right_hand_ry        revolute  right_hand_rx                 0          0          0          0          1          0        1.0
+  right_hand_rz        revolute  right_hand_ry                 0          0          0          0          0          1        1.0
+markers: 19
+  0q                   left_knee_rx         point             0          0          0         40          0.5        1          0
+  1q                   left_ankle_ry         point       9.03232   -18.5861    17.8628         40          0.5        1          0
+  2q                   right_knee_rx        point             0          0          0         40          0.5        0          1
+  3q                   right_ankle_ry        point      -18.8479   -27.5956    11.1434         40          0.5        0          1
+  4q                   left_shoulder_ry     point      -35.9199    18.5462   -3.52917         40          0.5        1          0
+  5q                   left_elbow_rx        point             0          0          0         40          0.5        1          0
+  6q                   left_hand_ry         point      -95.4902    10.9394    21.6356         40          0.5        1          0
+  7q                   right_shoulder_ry    point       28.7318    20.4044    -6.2729         40          0.5        0          1
+  8q                   right_elbow_rx       point             0          0          0         40          0.5        0          1
+  9q                   right_hand_ry        point       85.0833    13.4059    10.2557         40          0.5        0          1
+  10q                  neck_rx           point        2.2914   -49.5239    16.1763         40          1          1        0.5
+  11q                  head_rx             point       5.68411    182.536    17.6206         40          1          1        0.5
+  12q                  left_hip_rx           point       67.0778    60.1186    7.68069         40          0.5        1          0
+  13q                  right_hip_rx         point      -60.4584    68.4292   -2.79847         40          0.5        0          1
+  14q                  root_ry            point             0          0          0         40          0.5        1          1
+  15q                  right_foot_rx          point       24.3262    16.9279    89.6963         40          0.5        0          1
+  16q                  left_foot_rx         point      -27.8605    17.8404    104.124         40          0.5        1          0
+  17q                  right_hand_rx          point             0          0          0         70          1          0          0
+  18q                  left_hand_rx           point             0          0          0         70          1          0          0
+scaling joints: 0
+dofs: 33
+  trans_root_tx         1
+      nolimits
+      root_tx                       1
+  trans_root_ty         1
+      nolimits
+      root_ty                       1
+  trans_root_tz         1
+      nolimits
+      root_tz                       1
+  rot_root_rx           1
+      nolimits
+      root_rx                       1
+  rot_root_ry           1
+      nolimits
+      root_ry                       1
+  rot_root_rz           1
+      nolimits
+      root_rz                       1
+  rot_left_hip_rx       1
+      limits                     -2.5        1.4
+      left_hip_rx                   1
+  rot_left_hip_ry       1
+      limits                     -0.6        0.6
+      left_hip_ry                   1
+  rot_left_hip_rz       1
+      limits                     -0.8        1.4
+      left_hip_rz                   1
+  rot_right_hip_rx      1
+      limits                     -2.5        1.4
+      right_hip_rx                  1
+  rot_right_hip_ry      1
+      limits                     -0.6        0.6
+      right_hip_ry                  1
+  rot_right_hip_rz      1
+      limits                     -1.4        0.8
+      right_hip_rz                  1
+  rot_left_knee_rx      1
+      limits                     -0.1        2.5
+      left_knee_rx                  1
+  rot_right_knee_rx     1
+      limits                     -0.1        2.5
+      right_knee_rx                 1
+  rot_left_ankle_rx     1
+      limits                     -0.4        0.7
+      left_ankle_rx                 1
+  rot_left_ankle_ry     1
+      limits                     -0.5        0.5
+      left_ankle_ry                 1
+  rot_right_ankle_rx    1
+      limits                     -0.4        0.7
+      right_ankle_rx                1
+  rot_right_ankle_ry    1
+      limits                     -0.5        0.5
+      right_ankle_ry                1
+  rot_neck_rx           1
+      limits                     -0.6        0.6
+      neck_rx                       1
+  rot_neck_ry           1
+      limits                     -0.6        0.6
+      neck_ry                       1
+  rot_neck_rz           1
+      limits                     -0.3        0.3
+      neck_rz                       1
+  rot_left_clavicle_ry  1
+      limits                     -0.6        0.4
+      left_clavicle_ry              1
+  rot_left_clavicle_rz  1
+      limits                     -0.4        0.4
+      left_clavicle_rz              1
+  rot_right_clavicle_ry  1
+      limits                     -0.4        0.6
+      right_clavicle_ry             1
+  rot_right_clavicle_rz  1
+      limits                     -0.4        0.4
+      right_clavicle_rz             1
+  rot_left_shoulder_ry  1
+      limits                       -2        0.6
+      left_shoulder_ry              1
+  rot_left_shoulder_rz  1
+      limits                       -1          1
+      left_shoulder_rz              1
+  rot_right_shoulder_ry  1
+      limits                     -0.6          2
+      right_shoulder_ry             1
+  rot_right_shoulder_rz  1
+      limits                       -1          1
+      right_shoulder_rz             1
+  rot_left_elbow_rx     1
+      limits                     -1.4        0.9
+      left_elbow_rx                 1
+  rot_left_elbow_ry     1
+      limits                     -2.7          0
+      left_elbow_ry                 1
+  rot_right_elbow_rx    1
+      limits                     -1.4        0.9
+      right_elbow_rx                1
+  rot_right_elbow_ry    1
+      limits                        0        2.7
+      right_elbow_ry                1
+textureEntries: 0
