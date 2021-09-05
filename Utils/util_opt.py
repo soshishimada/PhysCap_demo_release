@@ -39,17 +39,26 @@ class RbdlOpt():
         out = np.array(list(map(self.c2d_func, vectors)))
         out = self.mat_concatenate(out)
         return out
+
     def big_G_getter(self, Gtau):
 
         G = np.concatenate((Gtau, np.eye(3)), 0)
         G = np.concatenate((G, np.zeros(G.shape)), 1)
+        print(G,G.shape)
         return G
 
+    def big_G_getter2(self, Gtau):
+
+        G = np.concatenate((Gtau, np.eye(3)), 0)
+        #G = np.concatenate((G, np.zeros(G.shape)), 1)
+        #print(G,G.shape)
+        return G
     def get_wrench(self, model, com, q, body_id):
         contact = rbdl.CalcBodyToBaseCoordinates(model, q, body_id, np.zeros(3))
         contact_vec = contact - com
         G_tau_converted = self.cross2dot_convert(np.array([contact_vec]))
         return G_tau_converted
+        
     def jacobi_separator(self, jacobi, contact_info, jacobi_dim=6):
 
         extract_index = [np.arange(i * jacobi_dim, (i + 1) * jacobi_dim) for i in range(int(len(jacobi) / jacobi_dim))
@@ -60,14 +69,31 @@ class RbdlOpt():
         else:
             return []
 
+    def jacobi_separator2(self, jacobi, contact_info, jacobi_dim=6):
+        h,w=jacobi.shape
+        jacobi=jacobi.reshape(4,int(h/4),w)
+        jacobi=contact_info.reshape(-1,1,1)*jacobi
+        #print(jacobi.shape)
+        #print(contact_info,contact_info.shape)
+        jacobi=jacobi.reshape(h,w)
+        return jacobi
+       # extract_index = [np.arange(i * jacobi_dim, (i + 1) * jacobi_dim) for i in range(int(len(jacobi) / jacobi_dim))
+        #                 if contact_info[i]]
+       
+        #if len(extract_index) != 0:
+        #    return jacobi[np.array(extract_index).reshape(-1)]
+        #else:
+        #    return []
+
     def qp_force_estimation_toe_heel(self, bullet_contacts_lth_rth, model, M, q, qdot, des_qddot, gcc, lr_J6D):
         M = M[:6]
  
         mass = np.zeros(q.shape)
         com = np.zeros(3)
         rbdl.CalcCenterOfMass(model, q, qdot, mass, com)
-
+        
         l_toe_G_tau_converted = self.get_wrench(model, com, q, self.l_kafth_ids[3])
+        print(l_toe_G_tau_converted.shape)
         l_heel_G_tau_converted = self.get_wrench(model, com, q, self.l_kafth_ids[4])
         r_toe_G_tau_converted = self.get_wrench(model, com, q, self.r_kafth_ids[3])
         r_heel_G_tau_converted = self.get_wrench(model, com, q, self.r_kafth_ids[4])
@@ -79,12 +105,12 @@ class RbdlOpt():
         R = np.concatenate((R_l_toe, np.concatenate((R_l_heel, np.concatenate((R_r_toe, R_r_heel), 0)), 0)), 0)
 
         jacobi = self.jacobi_separator(lr_J6D, bullet_contacts_lth_rth)
-
+ 
         if len(jacobi) == 0:
             return 0, 0
 
         jacobi = jacobi[:, :6]
- 
+
         R = self.wrench_separator(R, bullet_contacts_lth_rth)
  
         A = np.dot(jacobi.T, R)
@@ -120,9 +146,114 @@ class RbdlOpt():
 
         return GRF_opt, R
 
+    def qp_force_estimation_toe_heel2(self, bullet_contacts_lth_rth, model, M, q, qdot, des_qddot, gcc, lr_J6D):
+        M = M[:6]
+ 
+        mass = np.zeros(q.shape)
+        com = np.zeros(3)
+        rbdl.CalcCenterOfMass(model, q, qdot, mass, com)
+        
+        l_toe_G_tau_converted = self.get_wrench(model, com, q, self.l_kafth_ids[3])
+        #print(l_toe_G_tau_converted.shape)
+        l_heel_G_tau_converted = self.get_wrench(model, com, q, self.l_kafth_ids[4])
+        r_toe_G_tau_converted = self.get_wrench(model, com, q, self.r_kafth_ids[3])
+        r_heel_G_tau_converted = self.get_wrench(model, com, q, self.r_kafth_ids[4])
+
+        R_l_toe = self.big_G_getter2(l_toe_G_tau_converted)
+        R_l_heel = self.big_G_getter2(l_heel_G_tau_converted)
+        R_r_toe = self.big_G_getter2(r_toe_G_tau_converted)
+        R_r_heel = self.big_G_getter2(r_heel_G_tau_converted)
+        #""""""
+        #print("------------------------------------------------------------")
+        #print(R_l_toe,R_l_heel,R_r_toe,R_r_heel,R_l_heel.shape)
+        R_list=[R_l_toe,R_l_heel,R_r_toe,R_r_heel]
+        R_h=24
+        R_w=12
+        R = np.zeros((R_h,R_w))
+        #print()
+        for i in range(len(R_list)): 
+            R[i*6:(i+1)*6,i*3:(i+1)*3]=R_list[i]
+ 
+        #R = np.concatenate((R_l_toe, np.concatenate((R_l_heel, np.concatenate((R_r_toe, R_r_heel), 0)), 0)), 0)
+        #print(R)
+        #print(lr_J6D.shape)
+        jacobi = self.jacobi_separator2(lr_J6D, bullet_contacts_lth_rth)
+        #print('jacobi',jacobi.shape)
+        if len(jacobi) == 0:
+            return 0, 0
+
+        jacobi = jacobi[:, :6]
+        #print('ssssssssss',R.shape)
+        #R = self.wrench_separator(R, bullet_contacts_lth_rth)
+        #print('ssssssss222ss',R.shape,jacobi.shape)
+        A = np.dot(jacobi.T, R)
+        #print(A.shape,'A')
+        b = np.dot(M, des_qddot) + gcc[:6]
+       # print(b.shape,'b')
+        W = np.dot(A.T, A)  
+        #print(W.shape,'W')
+        Q = -np.dot(b.T, A)  
+        #print(Q.shape,'Q')
+        mu = 1 / math.sqrt(2)
+
+        """ 
+        G = np.array([[0, 0, -1, 0, 0, 0],
+                      [1, 0, -mu, 0, 0, 0],
+                      [-1, 0, -mu, 0, 0, 0],
+                      [0, 1, -mu, 0, 0, 0],
+                      [0, -1, -mu, 0, 0, 0],
+                      [0, 0, 0, 0, 0, -1],
+                      [0, 0, 0, 1, 0, -mu],
+                      [0, 0, 0, -1, 0, -mu],
+                      [0, 0, 0, 0, 1, -mu],
+                      [0, 0, 0, 0, -1, -mu]
+                      ])"""
+                      
+        G = np.array([[0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [1,-mu,0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [-1,-mu,0 , 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                        [0,-mu,1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0,-mu,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        
+                        [0, 0, 0, 0, -1, 0, 0, 0, 0, 0,  0, 0],
+                        [0, 0, 0, 1,-mu,0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0,-1,-mu,0, 0, 0, 0, 0, 0, 0], 
+                        [0, 0, 0, 0,-mu,1, 0, 0, 0, 0, 0,  0],
+                        [0, 0, 0, 0,-mu,-1, 0, 0, 0, 0, 0, 0],
+
+                        [0, 0, 0,0, 0, 0, 0, -1, 0, 0, 0, 0, ],
+                        [0, 0, 0,0, 0, 0,1,-mu, 0, 0, 0, 0],
+                        [0, 0, 0,0, 0, 0,-1,-mu, 0 , 0, 0, 0], 
+                        [0, 0, 0,0, 0, 0,0, -mu,1, 0, 0, 0],
+                        [0, 0, 0,0, 0, 0,0, -mu,-1, 0, 0, 0],
+
+
+                        [0, 0, 0,0, 0, 0,0, 0, 0,0, -1, 0],
+                        [0, 0, 0,0, 0, 0,0, 0, 0,1,-mu, 0],
+                        [0, 0, 0,0, 0, 0,0, 0, 0,-1,-mu, 0], 
+                        [0, 0, 0,0, 0, 0,0, 0, 0,0, -mu,1],
+                        [0, 0, 0,0, 0, 0,0, 0, 0,0, -mu,-1],
+
+                        ])
+        #print(G.shape)
+        h = np.array(np.zeros(20).tolist())  
+
+        W = matrix(W.astype(np.double))
+        Q = matrix(Q.astype(np.double))
+        G = matrix(G.astype(np.double))
+        h = matrix(h.astype(np.double))
+
+        sol =  solvers.qp(W, Q, G=G, h=h)
+        GRF_opt = np.array(sol["x"]).reshape(-1)
+        #print(GRF_opt) 
+        #print(GRF_opt.shape)
+        return GRF_opt, R
+
     def qp_control_hc(self, bullet_contacts_lth_rth, M, qdot, des_qddot, gcc,lr_J6D, GRF_opt, R):
-        lr_F_J6D = self.jacobi_separator(lr_J6D, bullet_contacts_lth_rth) 
+        lr_F_J6D = self.jacobi_separator2(lr_J6D, bullet_contacts_lth_rth) 
+        #print(lr_F_J6D.shape,'jacobi',R.shape,GRF_opt.shape)
         if len(lr_F_J6D) != 0:
+            #print(lr_F_J6D.shape,'jacobi',R.shape,GRF_opt.shape)
             general_GRF = np.dot(lr_F_J6D.T, np.dot(R, GRF_opt))
         else:
             general_GRF = 0

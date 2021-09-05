@@ -85,8 +85,7 @@ def sim_loop(path_dict,floor_known=0):
     qddot = np.zeros(model.qdot_size)
     tau = np.zeros(model.qdot_size)
     M = np.zeros((model.q_size, model.q_size))
-    jointIds_reordered = np.array(jointIds)[rbdl2bullet]
- 
+    jointIds_reordered = np.array(jointIds)[rbdl2bullet] 
     ### start simulation loop ### 
     n_frames = len(la_po_dic['trans_root_tx']) 
     for count in range(n_frames):
@@ -161,7 +160,8 @@ def sim_loop(path_dict,floor_known=0):
             r_heel = np.array(p.getLinkState(id_robot, r_heel_id)[0])
 
             """  compute GRF and torques """
-            GRF_opt, G = RO.qp_force_estimation_toe_heel(bullet_contacts_lth_rth, model, M, q, qdot, des_qddot, gcc, lth_rth_J6D)
+            
+            GRF_opt, G = RO.qp_force_estimation_toe_heel2(bullet_contacts_lth_rth, model, M, q, qdot, des_qddot, gcc, lth_rth_J6D)
             tau, acc, _ = RO.qp_control_hc(bullet_contacts_lth_rth, M, qdot, des_qddot, gcc, lth_rth_J6D,  GRF_opt, G)
             #tau, acc, _ = RO.qp_control_fast(bullet_contacts_lth_rth, M, qdot, des_qddot, gcc, lth_rth_J6D,  GRF_opt, G)
             
