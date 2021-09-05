@@ -3,7 +3,7 @@ The implementation is based on [SIGGRAPH Aisa'20](https://vcai.mpi-inf.mpg.de/pr
  
 ## Dependencies
 - Python 3.7
-- Ubuntu 18.04 (The system should run on other Ubuntu versions and Windows, however not tested.)
+- Ubuntu 18.04  (The system should run on other Ubuntu versions and Windows, however not tested.)
 - RBDL: Rigid Body Dynamics Library (https://rbdl.github.io/)
 - PyTorch 1.8.1 with GPU support (cuda 10.2 is tested to work)
 - For other python packages, please check requirements.txt
