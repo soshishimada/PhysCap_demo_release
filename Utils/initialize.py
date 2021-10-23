@@ -28,12 +28,12 @@ class Initializer():
             "scale":1000,"iter":8,"delta_t":0.001,"j_kp":117497,"j_kd":3300,"bt_kp":155000,
             "bt_kd":2300,"br_kp":50000,"br_kd":2800}
         self.params2={
-            "scale":1000,"iter":4,"delta_t":0.033,"j_kp":300,"j_kd":150,"bt_kp":600,
+            "scale":1000,"iter":8,"delta_t":0.01,"j_kp":300,"j_kd":150,"bt_kp":600,
             "bt_kd":300,"br_kp":300,"br_kd":150}
         self.con_j_ids_bullet = {"r_toe_id":34,"r_heel_id":35,"l_toe_id":17,"l_heel_id":18}
     
     def get_params(self):
-        return self.params1
+        return self.params2#self.params1
 
     def get_con_j_idx_bullet(self):
         return self.con_j_ids_bullet
