@@ -166,7 +166,8 @@ def sim_loop(path_dict,floor_known=0):
             #tau, acc, _ = RO.qp_control_fast(bullet_contacts_lth_rth, M, qdot, des_qddot, gcc, lth_rth_J6D,  GRF_opt, G)
             
             """  Pose update """ 
-            q =  pre_q + delta_t * qdot + acc*delta_t * delta_t/2
+            qdot = pre_qdot +acc*delta_t 
+            q =  pre_q + delta_t * qdot  
             """  update visualization """
             r = Rot.from_euler('zyx', q[3:6])
             angle = r.as_euler('xyz')
