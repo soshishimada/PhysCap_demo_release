@@ -322,7 +322,7 @@ class RbdlOpt():
         W = np.dot(a.T, a)
         W = np.concatenate((W, np.zeros(M.shape)), 1)
         Q = -np.dot(bb.T, a)
-        W_tau_bottom = 0.00001 * np.eye(M.shape[0])
+        W_tau_bottom =  0.00045*np.eye(M.shape[0])
         W_bottom = np.concatenate((np.zeros(M.shape), W_tau_bottom), 1)
         W = np.concatenate((W, W_bottom), 0)
 
